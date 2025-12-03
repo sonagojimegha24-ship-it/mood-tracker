@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mood Tracker</title>
+
+  <!-- styles -->
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- app script -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="nature-bg" aria-hidden="true"></div>
+
+  <div class="container">
+
+    <!-- Login Page -->
+    <section id="login-page" class="page active" aria-label="login page">
+      <div class="login-box wallpaper-bg">
+        <h1>Welcome</h1>
+
+        <!-- LOGIN FORM LINKED TO BACKEND -->
+        <form id="login-form"
+              method="post"
+              action="backend/login.php"
+              autocomplete="off">
+          <input type="text"
+                 id="username"
+                 name="email"
+                 placeholder="Email / Username"
+                 required />
+          <input type="password"
+                 id="password"
+                 name="password"
+                 placeholder="Password"
+                 required />
+          <button type="submit">Login</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Mood Entry Page (page 2) -->
+    <section id="mood-page" class="page" aria-label="mood entry">
+      <div class="inner center-fill">
+        <div>
+          <div id="welcome-message" class="welcome-message"></div>
+          <h2>How is your mood today?</h2>
+          <div class="mood-options" role="list">
+            <button class="mood-btn" data-mood="happy">😊 Happy</button>
+            <button class="mood-btn" data-mood="sad">😢 Sad</button>
+            <button class="mood-btn" data-mood="angry">😠 Angry</button>
+            <button class="mood-btn" data-mood="calm">😌 Calm</button>
+            <button class="mood-btn" data-mood="anxious">😰 Anxious</button>
+            <button class="mood-btn" data-mood="excited">🤩 Excited</button>
+            <button class="mood-btn" data-mood="bored">🥱 Bored</button>
+            <button class="mood-btn" data-mood="tired">😴 Tired</button>
+            <button class="mood-btn" data-mood="grateful">🙏 Grateful</button>
+            <button class="mood-btn" data-mood="confused">😕 Confused</button>
+            <button class="mood-btn" data-mood="motivated">💪 Motivated</button>
+            <button class="mood-btn" data-mood="stressed">😩 Stressed</button>
+          </div>
+
+          <!-- HIDDEN FORM TO SEND MOOD TO BACKEND -->
+          <form id="mood-form" method="post" action="backend/add_mood.php">
+            <input type="hidden" id="moodInput" name="mood">
+            <input type="hidden" id="noteInput" name="note">
+          </form>
+
+        </div>
+
+        <!-- BIG centered Next button (covers center width) -->
+        <div class="page-cta">
+          <button id="next-btn" disabled class="primary-large">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weekly Mood Page (page 3) -->
+    <section id="graph-page" class="page" aria-label="weekly overview">
+      <div class="inner center-fill">
+        <div>
+          <div class="graph-header">
+            <h2>Your Weekly Mood</h2>
+            <p class="graph-sub">Here are your moods for each day this week</p>
+          </div>
+
+          <div class="week-track" id="week-track" aria-live="polite"></div>
+
+          <div id="creative-suggestion" class="creative-suggestion" aria-live="polite"></div>
+        </div>
+
+        <!-- centered big action buttons -->
+        <div class="page-cta">
+          <button id="reset-btn" class="muted-large">Reset Mood</button>
+          <button id="detailed-graph-btn" class="primary-large">See Full Week Graph</button>
+        </div>
+
+        <div id="reset-dialog" class="dialog hidden" role="dialog" aria-modal="true">
+          <div class="dialog-card">
+            <p>Are you sure you want to reset today’s mood?</p>
+            <div class="dialog-actions">
+              <button id="reset-yes" class="primary-large">Yes</button>
+              <button id="reset-no" class="muted-large">No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Graph Page (page 4) -->
+    <section id="detailed-graph-page" class="page" aria-label="detailed graph">
+      <div class="inner center-fill">
+        <div>
+          <div class="graph-header">
+            <h2>Thank you for tracking your mood!</h2>
+            <p class="graph-sub">Here's your mood journey for the week.</p>
+          </div>
+
+          <div class="graph-area">
+            <canvas id="detailed-mood-graph" aria-label="detailed mood chart"></canvas>
+            <div id="detailed-no-data-msg" class="no-data">No mood data yet! Track your moods to see your week’s journey 📅</div>
+          </div>
+        </div>
+
+        <!-- BIG centered Thank / Back buttons -->
+        <div class="page-cta">
+          <button id="thank-you-btn" class="primary-large fullwidth">Thank You</button>
+          <button id="back-to-main-btn" class="muted-large fullwidth">Back</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
+
